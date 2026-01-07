@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#ff416c,#ff4b2b);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.box{
+    background:rgba(255,255,255,0.18);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    width:390px;
+    padding:35px;
+    border-radius:22px;
+    box-shadow:0 30px 60px rgba(0,0,0,0.6);
+    color:#fff;
+    animation:pop 0.9s ease;
+}
+
+.box h2{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.box input{
+    width:100%;
+    padding:14px;
+    margin-bottom:15px;
+    border:none;
+    border-radius:12px;
+    background:rgba(255,255,255,0.25);
+    color:#fff;
+}
+
+.box input::placeholder{
+    color:#eee;
+}
+
+.box input:focus{
+    outline:2px solid #fff;
+}
+
+.box button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#fff;
+    color:#ff416c;
+    font-weight:700;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.box button:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 25px rgba(255,255,255,0.8);
+}
+
+.box p{
+    text-align:center;
+    margin-top:18px;
+}
+
+.box a{
+    color:#fff;
+    text-decoration:underline;
+}
+
+@keyframes pop{
+    from{opacity:0; transform:scale(0.85);}
+    to{opacity:1; transform:scale(1);}
+}
+
+@media(max-width:420px){
+    .box{margin:15px;}
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Join the Power 🔥</h2>
+    <form method="POST">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>        <button>Register</button>
+    </form>
+    <p>Already inside? <a href="{{url_for('login')}}">Login</a></p>
+</div>
+
+</body>
+</html>

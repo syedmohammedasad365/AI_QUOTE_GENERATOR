@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(120deg,#141e30,#243b55);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.card{
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    width:360px;
+    padding:35px;
+    border-radius:20px;
+    color:#fff;
+    box-shadow:0 30px 60px rgba(0,0,0,0.6);
+    animation:slideIn 0.9s ease;
+}
+
+.card h2{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    margin-bottom:18px;
+    border:none;
+    border-radius:12px;
+    background:rgba(255,255,255,0.25);
+    color:#fff;
+    font-size:15px;
+}
+
+input::placeholder{
+    color:#ddd;
+}
+
+input:focus{
+    outline:2px solid #00f2fe;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#00f2fe;
+    color:#000;
+    font-weight:700;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    box-shadow:0 0 25px #00f2fe;
+    transform:translateY(-2px);
+}
+
+.footer{
+    text-align:center;
+    margin-top:18px;
+}
+
+.footer a{
+    color:#00f2fe;
+    text-decoration:none;
+}
+
+@keyframes slideIn{
+    from{opacity:0; transform:translateX(60px);}
+    to{opacity:1; transform:translateX(0);}
+}
+
+@media(max-width:420px){
+    .card{margin:15px;}
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Login ⚡</h2>
+    <form>
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button>Access</button>
+    </form>
+    <div class="footer">
+        <p>New user? <a href="{{url_for('registration')}}">Create account</a></p>
+    </div>
+</div>
+
+</body>
+</html>

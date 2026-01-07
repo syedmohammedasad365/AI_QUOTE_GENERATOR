@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Quote Generator ⚡</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;500;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    background:radial-gradient(circle at top, #0f2027, #000);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:'Poppins',sans-serif;
+    color:#fff;
+    overflow:hidden;
+}
+
+/* FLOATING BACKGROUND GLOW */
+body::before{
+    content:'';
+    position:absolute;
+    width:600px;
+    height:600px;
+    background:radial-gradient(circle, rgba(0,242,254,0.35), transparent 70%);
+    animation:float 6s infinite alternate ease-in-out;
+}
+
+@keyframes float{
+    from{transform:translate(-100px,-80px);}
+    to{transform:translate(120px,100px);}
+}
+
+/* GLASS CONTAINER */
+.container{
+    position:relative;
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    padding:45px 40px;
+    border-radius:24px;
+    width:90%;
+    max-width:520px;
+    box-shadow:0 30px 70px rgba(0,0,0,0.7);
+    text-align:center;
+    animation:entry 1.2s ease;
+}
+
+@keyframes entry{
+    from{opacity:0; transform:scale(0.85);}
+    to{opacity:1; transform:scale(1);}
+}
+
+/* TITLE */
+h1{
+    font-family:'Orbitron',sans-serif;
+    font-size:2.4rem;
+    margin-bottom:25px;
+    letter-spacing:2px;
+    background:linear-gradient(90deg,#00f2fe,#4facfe);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+/* QUOTE CARD */
+.quote-card{
+    margin-top:20px;
+}
+
+#quote{
+    font-size:1.15rem;
+    line-height:1.7;
+    min-height:90px;
+    margin-bottom:18px;
+    opacity:0.95;
+    transition:0.3s;
+}
+
+.author{
+    font-size:0.95rem;
+    opacity:0.7;
+    margin-bottom:30px;
+    transform:translateY(10px);
+    animation:authorIn 0.6s ease forwards;
+}
+
+@keyframes authorIn{
+    to{opacity:1; transform:translateY(0);}
+}
+
+/* BUTTON */
+button{
+    padding:15px 38px;
+    border:none;
+    border-radius:50px;
+    background:linear-gradient(135deg,#00f2fe,#4facfe);
+    color:#000;
+    font-weight:700;
+    letter-spacing:1px;
+    font-size:1rem;
+    cursor:pointer;
+    transition:0.25s;
+    box-shadow:0 0 20px rgba(0,242,254,0.6);
+}
+
+button:hover{
+    transform:translateY(-3px) scale(1.05);
+    box-shadow:0 0 35px rgba(0,242,254,0.9);
+}
+
+button:active{
+    transform:scale(0.95);
+}
+
+/* BUTTON HIT EFFECT */
+button.pulse{
+    animation:pulse 0.6s ease;
+}
+
+@keyframes pulse{
+    0%{box-shadow:0 0 0 rgba(0,242,254,0.7);}
+    70%{box-shadow:0 0 40px rgba(0,242,254,1);}
+    100%{box-shadow:0 0 20px rgba(0,242,254,0.6);}
+}
+
+/* TYPE EFFECT */
+.type{
+    border-right:2px solid #00f2fe;
+    animation:blink 0.7s infinite;
+}
+
+@keyframes blink{
+    50%{border-color:transparent;}
+}
+
+@media(max-width:480px){
+    h1{font-size:1.9rem;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>AI QUOTE GENERATOR</h1>
+
+    <div class="quote-card">
+        <p id="quote">Tap the button. Feel the power ⚡</p>
+        <p id="author" class="author"></p>
+        <button id="newQuote">GENERATE ⚡</button>
+    </div>
+</div>
+
+<script>
+const quoteEl = document.getElementById("quote");
+const authorEl = document.getElementById("author");
+const btn = document.getElementById("newQuote");
+
+async function fetchQuote() {
+    btn.classList.add("pulse");
+    setTimeout(()=>btn.classList.remove("pulse"),600);
+
+    quoteEl.textContent = "";
+    quoteEl.classList.add("type");
+    authorEl.textContent = "";
+
+    try {
+        const res = await fetch("/quote");
+        const data = await res.json();
+
+        typeText(`“${data.quote}”`, quoteEl, () => {
+            quoteEl.classList.remove("type");
+            authorEl.textContent = `— ${data.author}`;
+        });
+
+    } catch {
+        quoteEl.textContent = "⚠️ Failed to fetch quote";
+        quoteEl.classList.remove("type");
+    }
+}
+
+function typeText(text, element, callback){
+    let i = 0;
+    const speed = 22;
+
+    function typing(){
+        if(i < text.length){
+            element.textContent += text.charAt(i);
+            i++;
+            setTimeout(typing, speed);
+        } else if(callback){
+            callback();
+        }
+    }
+    typing();
+}
+
+btn.addEventListener("click", fetchQuote);
+fetchQuote();
+</script>
+
+</body>
+</html>
